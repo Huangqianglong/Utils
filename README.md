@@ -8,8 +8,8 @@ modify by master2 // add by reset --soft  & add msg
 
 
 
-xxxxx /change by reset --soft and modify
+git 冲突合并测试 4
 
 
 
-git 提交 地点2 第一次1提交
+git 冲突合并测试
