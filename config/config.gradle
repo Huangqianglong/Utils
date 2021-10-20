@@ -1,0 +1,19 @@
+ext {
+    //避免各个model使用不同的版本，多个model引用到相同第三方jar时，统一使用这里规定的版本
+    username = "wb"
+    androidId = [
+            compileSdkVersion: 30,
+            buildToolsVersion: "30.0.0",
+            minSdkVersion    : 26,
+            targetSdkVersion : 30,
+            versionCode      : 1,
+            versionName      : "1.0"
+    ]
+    dependencies = [
+            //网络加载
+            rxjava2         : 'io.reactivex.rxjava2:rxandroid:2.1.0',
+            retrofit        : 'com.squareup.retrofit2:retrofit:2.5.0',
+            converter_gson  : 'com.squareup.retrofit2:converter-gson:2.1.0'
+
+    ]
+}

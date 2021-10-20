@@ -1,0 +1,17 @@
+android {
+    flavorDimensions "netEnvironment"
+    productFlavors {
+
+        prodEnv { // 正式网 (默认正式网)
+            buildConfigField "String", "BASE_URL", '"str_url"'
+            buildConfigField "String", "APP_ID", '"APP_ID"'
+            buildConfigField "String", "APP_KEY", '"APP_KEY"'
+        }
+        devEnv { // 测试网
+            buildConfigField "String", "BASE_URL", '"str_url"'
+            buildConfigField "String", "APP_ID", '"APP_ID"'
+            buildConfigField "String", "APP_KEY", '"APP_KEY"'
+        }
+
+    }
+}

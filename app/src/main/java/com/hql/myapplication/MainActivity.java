@@ -1,26 +1,18 @@
 package com.hql.myapplication;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import android.util.Log;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.SharedPreferencesCompat;
 
-import android.util.Log;
-import android.util.TypedValue;
-import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
+import com.hql.netlib.NetworkHelper;
+import com.hql.netlib.miniprogram.WeatherResultBean;
+import com.hql.netlib.miniprogram.WeatherResultSubscriber;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,14 +25,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void pxToDp(View view) {
         final float scale = getResources().getDisplayMetrics().density;
-        Log.d("hql","scale 大小："+scale+">>>"+ getResources().getDisplayMetrics().densityDpi);
+        Log.d("hql", "scale 大小：" + scale + ">>>" + getResources().getDisplayMetrics().densityDpi);
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < 2400; i++) {
             //String s= "<dimen name=\"px_2_dp_dimen_"+i+">"+px2dip(i,scale)+"dp</dimen>";
             sb.append("<dimen name=\"px_2_dp_dimen_" + i + "\">" + px2dip(i, scale) + "dp</dimen>");
             //sb.append("<dimen name=\"px_2_dp_dimen_" + i + "\">" + px2dip(this, i) + "dp</dimen>");
         }
-        writeTxtToFile(sb.toString(),"/sdcard/px2dp/","px_2_dp.text");
+        writeTxtToFile(sb.toString(), "/sdcard/px2dp/", "px_2_dp.text");
 
 
     }
@@ -120,5 +112,21 @@ public class MainActivity extends AppCompatActivity {
         return (int) (pxValue / scale + 0.5f);
     }
 
+    public void requestWeather() {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("key1", "key1");
+        map.put("body", "body");
+        NetworkHelper.getInstance().doHttpRequest(map, map.get("body"), new WeatherResultSubscriber() {
+            @Override
+            protected void onSuccess(WeatherResultBean result) {
+
+            }
+
+            @Override
+            protected void onError(String result, String errorMsg) {
+
+            }
+        });
+    }
 
 }
