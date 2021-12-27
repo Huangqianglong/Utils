@@ -43,8 +43,47 @@ dependencies {
     implementation rootProject.ext.dependencies["rxjava2"]
     implementation rootProject.ext.dependencies["retrofit"]
     implementation rootProject.ext.dependencies["converter_gson"]
+    if (getLocalProperty("debugModel", false)) {
+        //在local.properties添加导包开关，默认关闭
+    }else{
+
+    }
 //    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.2.0'
 //    implementation 'io.reactivex:rxandroid:1.2.1'
 //    implementation 'com.squareup.okhttp3:okhttp:3.12.0'
 
+}
+/**
+ * 从根目录下的 local.properties 中提取指定的属性,若无则返回默认值
+ */
+def getLocalProperty(String keyName, Object defaultValue) {
+    File file = rootProject.file("local.properties")
+    if (!file.exists() || keyName == null || keyName.length() == 0) {
+        print("指定文件(local.properties)或者属性 $keyName 不存在")
+        return defaultValue
+    }
+    InputStream inputStream = file.newDataInputStream()
+    Properties properties = new Properties()
+    properties.load(inputStream)
+
+    def localKeys = properties.keys()
+    for (String propertyName : localKeys) {
+        if (keyName != propertyName) {
+            continue
+        }
+        def localPropertyValue = properties.getProperty(keyName)
+        if (defaultValue instanceof Integer) {
+            return Integer.parseInt(localPropertyValue)
+        } else if (defaultValue instanceof Double) {
+            return Double.parseDouble(localPropertyValue)
+        } else if (defaultValue instanceof Boolean) {
+            return Boolean.parseBoolean(localPropertyValue)
+        } else if (defaultValue instanceof String) {
+            return localPropertyValue
+        } else {
+            println("未知类型属性$propertyName,请检查后重试")
+        }
+    }
+    println("获取 $keyName 失败,返回默认值: $defaultValue")
+    return defaultValue
 }
