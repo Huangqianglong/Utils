@@ -1,5 +1,7 @@
 package com.hql.netlib;
 
+import com.hql.common.LoggerUtil;
+
 import java.security.MessageDigest;
 import java.util.HashMap;
 import java.util.Map;

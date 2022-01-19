@@ -3,7 +3,7 @@ package com.hql.netlib.result;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.hql.netlib.LoggerUtil;
+import com.hql.common.LoggerUtil;
 
 import java.lang.reflect.Type;
 
@@ -18,6 +18,7 @@ public abstract class BaseResultSubscriber<T extends BaseResultBean> extends Bas
     Gson mGson = new Gson();
     Disposable d;
     T mResult;
+
     @Override
     public void onError(Throwable e) {
         LoggerUtil.d("hql >>Throwable>" + e.toString());
@@ -50,7 +51,7 @@ public abstract class BaseResultSubscriber<T extends BaseResultBean> extends Bas
         }
         if (RESULT_OK.equals(result)) {
             //mGson.fromJson(result, (Type)mResult);
-            onSuccess(mGson.fromJson(result, (Type)mResult));
+            onSuccess(mGson.fromJson(result, (Type) mResult));
         } else {
             LoggerUtil.d("hql >onNext> erro jsonObject>" + jsonObject.toString());
             onError(RESULT_ERROR, msg);

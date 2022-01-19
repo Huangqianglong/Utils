@@ -3,9 +3,7 @@ package com.hql.netlib;
 import android.content.Context;
 
 import com.google.gson.JsonObject;
-import com.hql.netlib.miniprogram.WeatherResultBean;
-import com.hql.netlib.miniprogram.WeatherResultSubscriber;
-import com.hql.netlib.result.BaseResultSubscriber;
+import com.hql.common.LoggerUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -113,7 +111,7 @@ public class NetworkHelper {
 
             }
             if (DEBUG) {
-                LoggerUtil.d(TAG, "hql 网络请求 headers :" + "\n" + request.headers().toString());
+               LoggerUtil.d(TAG, "hql 网络请求 headers :" + "\n" + request.headers().toString());
                 LoggerUtil.d(TAG, "hql 网络请求 body :" + "\n" + requestValue);
             }
             Response response = chain.proceed(request);

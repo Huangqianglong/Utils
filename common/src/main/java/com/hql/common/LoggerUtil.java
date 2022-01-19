@@ -1,4 +1,4 @@
-package com.hql.netlib;
+package com.hql.common;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;

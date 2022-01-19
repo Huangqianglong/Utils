@@ -1,2 +1,4 @@
 include ':netLib'
 include ':app'
+include ':location'
+include ':common'

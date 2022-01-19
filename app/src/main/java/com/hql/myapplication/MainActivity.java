@@ -1,11 +1,15 @@
 package com.hql.myapplication;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.hql.common.LoggerUtil;
+import com.hql.location.LocationHelper;
 import com.hql.netlib.NetworkHelper;
 import com.hql.netlib.miniprogram.WeatherResultBean;
 import com.hql.netlib.miniprogram.WeatherResultSubscriber;
@@ -15,17 +19,26 @@ import java.io.RandomAccessFile;
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
+    private TextView mLocationTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        mLocationTv = findViewById(R.id.tv_location);
+        LocationHelper.getInstance().setMyLocationListener(new LocationHelper.MyLocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                mLocationTv.setText("经度：" + location.getLatitude()
+                        + "\n纬度：" + location.getLongitude());
+            }
+        });
+        LocationHelper.getInstance().initLocation(this);
     }
 
     public void pxToDp(View view) {
         final float scale = getResources().getDisplayMetrics().density;
-        Log.d("hql", "scale 大小：" + scale + ">>>" + getResources().getDisplayMetrics().densityDpi);
+        LoggerUtil.d("hql", "scale 大小：" + scale + ">>>" + getResources().getDisplayMetrics().densityDpi);
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < 2400; i++) {
             //String s= "<dimen name=\"px_2_dp_dimen_"+i+">"+px2dip(i,scale)+"dp</dimen>";
