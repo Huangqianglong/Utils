@@ -1,0 +1,12 @@
+用于分析Touch的传递事件
+ViewGroup
+dispatchTouchEvent->onInterceptTouchEvent->子View处理->(TouchListener(如果有))->onTouchEvent->(TouchListener(如果有))->onTouchEvent
+
+子View处理
+dispatchTouchEvent->(TouchListener(如果有))->onTouchEvent
+
+流程：
+1.先从Activity的dispatchTouchEvent下发到子ViewGroup的dispatchTouchEvent，如果没有拦截，再到该ViewGroup的onInterceptTouchEvent，如果也没有拦截，则下发到孙子ViewGroup/View。
+2.View的执行流程是dispatchTouchEvent，没有拦截则执行到View的onTouchEvent，
+如果在onTouchEvent没有消耗该事件，则返回上层ViewGroup的onTouchEvent，如果都没有消耗，则最终走到activity的onTouchEvent.
+3.如果有TouchListener，优先级比onTouchEvent高
